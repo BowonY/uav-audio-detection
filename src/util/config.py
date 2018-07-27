@@ -20,7 +20,7 @@ class Config(object):
             config = yaml.load(f)
         self.NAME = config['NAME']
         self.DEVICE_NAME = config['DEVICE_NAME']
-        self.WAV_PATH = self.wav_path(config['WAV_PATH'])
+        self.WAV_PATH, self.RESUlTS_PATH = self.output_files(config['WAV_PATH'], config['RESULTS_PATH'])
         self.MODEL_TYPE = config['MODEL_TYPE']
         self.MODEL_PATH = config['MODEL_PATH']
         self.FEATURE_TYPE = config['FEATURE_TYPE']
@@ -31,7 +31,9 @@ class Config(object):
         # self.N_FRAME = config['N_FRAME']
         # self.N_CHANNELS = config['N_CHANNELS']
 
-    def wav_path(self, path):
+    def output_files(self, wav, res):
         import time
         t = int(time.time())
-        return path+self.NAME+'_%s.wav' % t
+        wav_path = wav+self.DEVICE_NAME+'_%s.wav' % t
+        res_path = res+self.DEVICE_NAME+'_%s.txt' % t
+        return wav_path, res_path
